@@ -73,6 +73,32 @@ buflog = open("LifeModification/logs/buflog.txt", "w")
 account = open("LifeModification/configs/.perm.cfg")
 activ_key = account.readline()
 account.close()
+print("Choose user, for using this system:")
+print(TextColor.CYAN + "<<========    Users   ========>>" + TextColor.RESET)
+print(TextColor.GREEN + buser +TextColor.RESET +  " (press Enter)")
+print(TextColor.RED + "ROOT (Superuser)" + TextColor.RESET)
+print(TextColor.CYAN + "<<============================>>" + TextColor.RESET)
+print("")
+buffer = input("Username: ")
+if(buffer == "ROOT" or buffer == "root" or buffer == "Root"):
+    buffer2 = input(TextColor.YELLOW + "Type password: " + TextColor.RESET)
+    if (buffer2 == "5125"):
+        user = "ROOT"
+        print(TextColor.RED + "<<===========================================>>" +TextColor.RESET)
+        print(TextColor.RED + "|| ATTENTION! We are not responsible for all ||" + TextColor.RESET)
+        print(TextColor.RED + "|| Your actions in this user! Be careful!    ||" + TextColor.RESET)
+        print(TextColor.RED + "<<===========================================>>" +TextColor.RESET)
+        time.sleep(0.5)
+        print(TextColor.GREEN + "Welcome, ROOT!"+ TextColor.RESET)
+        time.sleep(1)
+        os.system(clean)
+    if (buffer2 != "5125"):
+        print(TextColor.RED + "Incorrect password! Redirect to non-root user" + TextColor.RESET)
+if(buffer == buser or buffer == ""):
+        user = buser
+        print(TextColor.GREEN + "Welcome, "+ buser +"!"+ TextColor.RESET)
+        time.sleep(1)
+        os.system(clean)
 if (activ_key == "true"):
     print("")
     print(TextColor.RED + "╔╗  ╔══╗╔══╗╔═══╗   ╔╗  ╔╗╔══╗╔══╗ ╔══╗╔══╗╔══╗╔══╗╔══╗╔════╗╔══╗╔══╗╔╗ ╔╗" + TextColor.RESET)
@@ -91,7 +117,7 @@ if (activ_key == "true"):
     print("")
     print("Welcome, " + user + "")
     print("")
-    print("Type 'help'for get help")
+    print("Type 'help' for get help")
     print("")
 if (activ_key != "true"):
     print("Please activating system before you start using ctOS, or press Enter if not have activation key.")
@@ -147,58 +173,98 @@ while(start == "true"):
         print(TextColor.CYAN + "||" + TextColor.RESET + "Control panel" + TextColor.CYAN + "||" + TextColor.RESET)
         print(TextColor.CYAN + "<<=================>>" + TextColor.RESET)
         print("1. Change language")
-        print("2. Change username")
-        print("3. Do factory reset")
-        buffer = input("Select action: ")
+        print("2. Users settings")
+        print("3. Install/update modules")
+        print("4. Do factory set")
+        print("5. About system")
+        print("   Or press any key+enter to exit")
+        buffer = input(TextColor.YELLOW + "Choose action: " + TextColor.RESET)
         if(buffer == "1"):
-            lang = open("LifeModification/configs/lang.cfg", "r")
-            buffer = lang.read()
-            lg = ""
-            if(buffer == "eng"):
-                lg = "eng"
-            if(buffer == "rus"):
-                lg = "rus"
-            lang.close()
-            langed = open("LifeModification/configs/lang.cfg", "w")
-            if(lg == "eng"):
-                langed.write("rus")
-            if(lg == "rus"):
-                langed.write("eng")
-                print(TextColor.GREEN + "Язык системы изменён, перезапустите систему для применения параметров." + TextColor.RESET)
-                print(TextColor.CYAN + "<<================================>>" + TextColor.RESET)
-                print(TextColor.GREEN + "The system language has been changed, restart the system to apply the settings." + TextColor.RESET)
-        if(buffer == "2"):
-            print(TextColor.YELLOW + "Changing username:" + TextColor.RESET)
             print("")
-            user = open("LifeModification/configs/user.cfg", "w")
-            buffer = input("Type new username: ")
-            user.write(buffer + "\n")
-            user.close()
-            cuser = open("LifeModification/configs/user.cfg", "r")
-            buffer = cuser.readline()
-            fix = len(buffer)
-            user = buffer[:fix-1]
-            buser = user
-            cuser.close()
-            time.sleep(0.3)
-            print(TextColor.GREEN + "Done" + TextColor.RESET)
+            print(TextColor.YELLOW + "Хотите сменить язык системы? ")
+            print(TextColor.CYAN + "<<================================>>" + TextColor.RESET)
+            query = input(TextColor.YELLOW + "Do you want to change the system language?" + TextColor.RESET + " ("+ TextColor.GREEN + "Y" + TextColor.RESET + "/" + TextColor.RED + "n" + TextColor.RESET + ") ")
+            print("")
+            if(query == "Y" or query == "y"):
+                lang = open("LifeModification/configs/lang.cfg", "r")
+                buffer = lang.read()
+                lg = ""
+                if(buffer == "eng"):
+                    lg = "eng"
+                if(buffer == "rus"):
+                    lg = "rus"
+                    lang.close()
+                langed = open("LifeModification/configs/lang.cfg", "w")
+                if(lg == "eng"):
+                    langed.write("rus")
+                if(lg == "rus"):
+                    langed.write("eng")
+                    print(TextColor.GREEN + "Язык системы изменён, перезапустите систему для применения параметров." + TextColor.RESET)
+                    print(TextColor.CYAN + "<<================================>>" + TextColor.RESET)
+                    print(TextColor.GREEN + "The system language has been changed, restart the system to apply the settings." + TextColor.RESET)
+            if(query == "n" or query == "N"):
+                print(TextColor.YELLOW + "Exiting..." + TextColor.RESET)
+        if(buffer == "2"):
+            print("")
+            print(TextColor.CYAN + "<<======== Users ========>>" + TextColor.RESET)
+            print(TextColor.GREEN + buser +TextColor.RESET)
+            print("Admin (Administrator)")
+            print(TextColor.RED + "ROOT ()" + TextColor.RESET)
+            print(TextColor.CYAN + "<<============       ===========>>" + TextColor.RESET)
+            print("")
+            print("Possible actions:")
+            print("1. View user information")
+            print("2. Change username")
+            print("   Or press any key+enter to exit")
+            buffer = input(TextColor.YELLOW + "Select action: " + TextColor.RESET)
+            if(buffer == "1"):
+                print("")
+                buffer = input(TextColor.YELLOW + "Enter the desired username: " + TextColor.RESET)
+                if (buffer == buser):
+                    print(TextColor.CYAN + "<<================>>" + TextColor.RESET)
+                    print("Username: " + user)
+                    print(years + " yrs")
+                    print("City: " + city)
+                    print(TextColor.CYAN + "<<================>>" + TextColor.RESET)
+                if (buffer == "ROOT" or buffer == "root" or buffer == "Root" or buffer == "Admin" or buffer == "ADMIN" or buffer == "admin" or buffer == "Administrator"):
+                    print("This is a system user.")
+            if(buffer == "2"):
+                print(TextColor.YELLOW + "Changing username:" + TextColor.RESET)
+                print("")
+                user = open("LifeModification/configs/user.cfg", "w")
+                buffer = input("Enter your username: ")
+                user.write(buffer + "\n")
+                user.close()
+                cuser = open("LifeModification/configs/user.cfg", "r")
+                buffer = cuser.readline()
+                fix = len(buffer)
+                user = buffer[:fix-1]
+                buser = user
+                cuser.close()
+                time.sleep(0.3)
+                print(TextColor.GREEN + "Done" + TextColor.RESET)
         if(buffer == "3"):
+            if(syst == "| base system: LINUX   |"):
+                os.system("python3 LifeModification/ObPy.py")
+            if(syst == "| base system: WINDOWS |"):
+                os.system("python LifeModification/ObPy.py")
+        if(buffer == "4"):
             fcheck = open("LifeModification/configs/oobe.cfg", "w")
             fcheck.write("true")
             fcheck.close()
             user = open("LifeModification/configs/user.cfg", "w")
             user.write("")
             os.system(clean)
-            print("Сброс.")
+            print("Reset.")
             time.sleep(0.5)
             os.system(clean)
-            print("Сброс..")
+            print("Reset..")
             time.sleep(0.5)
             os.system(clean)
-            print("Сброс...")
+            print("Reset...")
             time.sleep(0.5)
             os.system(clean)
-            print("Сброс...Done!")
+            print("Reset...Done!")
             time.sleep(0.5)
             start = "false"
             os.system(clean)
@@ -207,17 +273,22 @@ while(start == "true"):
             os.system(clean)
             time.sleep(0.5)
             os.system("python ctOS.py")
+        if(buffer == "5"):
+            if(syst == "| base system: LINUX   |"):
+                os.system("python3 LifeModification/vers.py")
+            if(syst == "| base system: WINDOWS |"):
+                os.system("python LifeModification/vers.py")
+    if(com == "lang"):
+        if(syst == "| base system: LINUX   |"):
+            os.system("python3 system/lang.py")
+        if(syst == "| base system: WINDOWS |"):
+            os.system("python LifeModification/lang.py")
     if (com == "pip"):
         buffer = input("Enter function for pip: ")
         if(syst == "| base system: LINUX   |"):
             os.system("python3 -m pip " + buffer)
         if(syst == "| base system: WINDOWS |"):
             os.system("python -m pip " + buffer)
-    if(com == "lang"):
-        if(syst == "| base system: LINUX   |"):
-            os.system("python3 system/ed_lg.py")
-        if(syst == "| base system: WINDOWS |"):
-            os.system("python LifeModification/lang.py")
     if(com == "usr edit" or com == "user edit"):
         print(TextColor.YELLOW + "User information edit:" + TextColor.RESET)
         print("")
@@ -465,8 +536,9 @@ while(start == "true"):
         if(syst == "| base system: LINUX   |"):
             os.system("python3 LifeModification/apct.py")
         if(syst == "| base system: WINDOWS |"):
-            os.system("python LifeModification/apct.py")
+            os.system("python LifeModification/apct.py")        
     if(com=="clr"):
+        os.system(clean)
         print("")
         print(TextColor.RED + "╔╗  ╔══╗╔══╗╔═══╗   ╔╗  ╔╗╔══╗╔══╗ ╔══╗╔══╗╔══╗╔══╗╔══╗╔════╗╔══╗╔══╗╔╗ ╔╗" + TextColor.RESET)
         print(TextColor.RED + "║║  ╚╗╔╝║╔═╝║╔══╝   ║║  ║║║╔╗║║╔╗╚╗╚╗╔╝║╔═╝╚╗╔╝║╔═╝║╔╗║╚═╗╔═╝╚╗╔╝║╔╗║║╚═╝║" + TextColor.RESET)
@@ -484,7 +556,7 @@ while(start == "true"):
         print("")
         print("Welcome, " + user + "")
         print("")
-        print("Type 'help'for get help")
+        print("Type 'help' for get help")
         print("")
     if(com=="help"):
          print("")
@@ -533,22 +605,22 @@ while(start == "true"):
          print("pip - Enter command for pip")
          print("apct - package downloader")
          print(TextColor.CYAN + "<<======== System Power ========>>" +TextColor.RESET)
-         print("restart - restart OS")
+         print("restart/reboot - restart OS")
          print("logout/shutdown/exit - Shutdown OS")
          print(TextColor.CYAN + "<<=========                                  ========>>" +TextColor.RESET)
-    if(com=="restart"):
+    if(com=="restart" or com=="reboot"):
         if(syst == "| base system: LINUX   |"):
             os.system(clean)
-            print("Restart.")
+            print("Restarting.")
             time.sleep(0.5)
             os.system(clean)
-            print("Restart..")
+            print("Restarting..")
             time.sleep(0.5)
             os.system(clean)
-            print("Restart...")
+            print("Restarting...")
             time.sleep(0.5)
             os.system(clean)
-            print("Restart...Done!")
+            print("Restarting...Done!")
             time.sleep(0.5)
             start = "false"
             os.system(clean)

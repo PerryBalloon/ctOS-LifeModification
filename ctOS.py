@@ -34,3 +34,4 @@ if(lg == "rus"):
     if(syst == "| base system: WINDOWS |"):
         os.system("python LifeModification/RU-ru/oobe_rus.py")
         os.system("python LifeModification/RU-ru/core_ru.py")
+        os.system("python LifeModification/RU-ru/logon_ru.py")

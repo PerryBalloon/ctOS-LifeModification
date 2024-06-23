@@ -55,9 +55,11 @@ settings.close()
 set = open("LifeModification/configs/build.cfg", "w")
 set.write(str(build))
 if(syst == "| base system: LINUX   |"):
-    os.system("python3 LifeModification/OS_Loaderpy")
+    os.system("python3 LifeModification/OS_Loader.py")
 if(syst == "| base system: WINDOWS |"):
     os.system("python LifeModification/OS_Loader.py")
+comlog = open("LifeModification/logs/comlog.txt", "w")
+buflog = open("LifeModification/logs/buflog.txt", "w")
 cuser = open("LifeModification/configs/user.cfg", "r")
 buffer = cuser.readline()
 fix = len(buffer)
@@ -71,6 +73,32 @@ time.sleep(0.1)
 os.system(clean)
 account = open("LifeModification/configs/.perm.cfg")
 activ_key = account.readline()
+print("Выберите пользователя, чтобы пользоваться системой:")
+print(TextColor.CYAN + "<<========Пользователи========>>" + TextColor.RESET)
+print(TextColor.GREEN + buser +TextColor.RESET +  " (можно нажать Enter)")
+print(TextColor.RED + "ROOT (Все возможности ОС)" + TextColor.RESET)
+print(TextColor.CYAN + "<<============================>>" + TextColor.RESET)
+print("")
+buffer = input("Имя пользователя: ")
+if(buffer == "ROOT" or buffer == "root" or buffer == "Root"):
+    buffer2 = input(TextColor.YELLOW + "Введите пароль: " + TextColor.RESET)
+    if (buffer2 == "5125"):
+        user = "ROOT"
+        print(TextColor.RED + "<<====================================================>>" +TextColor.RESET)
+        print(TextColor.RED + "|| ВНИМАНИЕ! Мы не несем ответственности за все       ||" + TextColor.RESET)
+        print(TextColor.RED + "|| Ваши действия в этом пользователе! Будь осторожен! ||" + TextColor.RESET)
+        print(TextColor.RED + "<<====================================================>>" +TextColor.RESET)
+        time.sleep(0.5)
+        print(TextColor.GREEN + "Добро пожаловать, ROOT!"+ TextColor.RESET)
+        time.sleep(1)
+        os.system(clean)
+    if (buffer2 != "5125"):
+        print(TextColor.RED + "Неверный пароль! Перенаправление на пользователя без прав суперпользователя" + TextColor.RESET)
+if(buffer == buser or buffer == ""):
+        user = buser
+        print(TextColor.GREEN + "Добро пожаловать, "+ buser +"!"+ TextColor.RESET)
+        time.sleep(1)
+        os.system(clean)
 if (activ_key == "true"):
     print("")
     print(TextColor.RED + "╔╗  ╔══╗╔══╗╔═══╗   ╔╗  ╔╗╔══╗╔══╗ ╔══╗╔══╗╔══╗╔══╗╔══╗╔════╗╔══╗╔══╗╔╗ ╔╗" + TextColor.RESET)
@@ -149,10 +177,11 @@ while(start == "true"):
         print(TextColor.CYAN + "||" + TextColor.RESET + "Панель управления" + TextColor.CYAN + "||" + TextColor.RESET)
         print(TextColor.CYAN + "<<=================>>" + TextColor.RESET)
         print("1. Сменить язык")
-        print("2. Действия с пользователями")
-        print("3. Обновить/установить модули")
+        print("2. Настройки пользователей")
+        print("3. Установить/обновить модули")
         print("4. Сбросить настройки")
         print("5. О системе")
+        print("   Или любая другая клавиша для выхода")
         buffer = input(TextColor.YELLOW + "Выберите действие: " + TextColor.RESET)
         if(buffer == "1"):
             print("")
@@ -190,6 +219,7 @@ while(start == "true"):
             print("Возможные действия:")
             print("1. Посмотреть информацию о пользователе")
             print("2. Изменить имя пользователя")
+            print("   Или любая другая клавиша для выхода")
             buffer = input(TextColor.YELLOW + "Выберите действие: " + TextColor.RESET)
             if(buffer == "1"):
                 print("")
@@ -252,6 +282,9 @@ while(start == "true"):
                 os.system("python3 LifeModification/vers.py")
             if(syst == "| base system: WINDOWS |"):
                 os.system("python LifeModification/vers.py")
+        if(buffer != "1" or buffer != "2" or buffer != "3" or buffer != "4" or buffer != "5"):
+            print("Выход...")
+            print("")
     if (com == "pip"):
         buffer = input("Введите комманду для pip: ")
         if(syst == "| base system: LINUX   |"):
@@ -536,7 +569,7 @@ while(start == "true"):
         print("pip - Ввод комманды для pip")
         print("apct - загрузчик пакетов")
         print(TextColor.CYAN + "<<======== Питание системы ========>>" +TextColor.RESET)
-        print("restart - перезагрузка системы")
+        print("restart/reboot - перезагрузка системы")
         print("logout/shutdown/exit - Выключение системы")
         print(TextColor.CYAN + "<<========                                  ========>>" +TextColor.RESET)
     if(com=="clr"): #Does anyone even need this command?
@@ -560,7 +593,7 @@ while(start == "true"):
            print("")
            print("Введите 'help'для получения помощи")
            print("")
-    if(com=="restart"):
+    if(com=="restart" or com=="reboot"):
         if(syst == "| base system: LINUX   |"):
             os.system(clean)
             print("Перезапуск.")
